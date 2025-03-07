@@ -29,7 +29,7 @@ export async function parseXmlFile<T>(filePath: string): Promise<T[]> {
     } catch (error: unknown) {
         if (error instanceof SyntaxError) {
             throw new Error(`Error: Malformed XML in file ${filePath}`);
-        } else if (error instanceof Error && 'code' in error && (error as any).code === 'ENOENT') {
+        } else if (error instanceof Error && (error as any).code === 'ENOENT') {
             throw new Error(`Error: File not found - ${filePath}`);
         } else {
             throw new Error(`Error: Unable to read the file ${filePath}, ${error}`);
