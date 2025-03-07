@@ -1,5 +1,4 @@
 import * as fs from 'fs/promises';
-import logger from '../logger';
 
 /**
  * Reads and parses a JSON file asynchronously, converting it into an array of objects.
