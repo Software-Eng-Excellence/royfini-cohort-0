@@ -1,14 +1,14 @@
-import { promises as fs } from "fs";
-import { parse as csvParse } from "csv-parse";
+import * as fs from "fs/promises";
+import { parse } from "csv-parse";
 
-export async function readCSVFile(
+export async function readCSVFile<T>(
   filePath: string,
   includeHeader: boolean = false
-): Promise<string[][]> {
+): Promise<T[]> {
   try {
     const fileContent = await fs.readFile(filePath, "utf-8");
     return new Promise((resolve, reject) => {
-      csvParse(
+      parse(
         fileContent,
         {
           trim: true,
@@ -16,8 +16,19 @@ export async function readCSVFile(
         },
         (err, records: string[][]) => {
           if (err) reject(err);
-          if (!includeHeader) records.shift();
-          resolve(records);
+          if (records.length === 0) resolve([]);
+
+          const headers = includeHeader ? records.shift() : records[0];
+          if (!headers) resolve([]);
+
+          const result = records.map(row => {
+            return headers!.reduce((acc, key, index) => {
+              acc[key as keyof T] = row[index] as unknown as T[keyof T];
+              return acc;
+            }, {} as T);
+          });
+
+          resolve(result);
         }
       );
     });

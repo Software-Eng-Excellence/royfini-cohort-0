@@ -5,20 +5,20 @@ import { parseJsonFile } from "./util/parsers/jsonParser";
 import { PetOrder, ToyOrder } from "./models";
 import { parseXmlFile } from "./util/parsers/xmlParser";
 
-async function start() {
-  //const data = await parseJsonFile<PetOrder>("src/data/pet orders.json");
-  //data?.forEach((e: PetOrder) => { logger.info("%o", e) })
-  const data1 = await parseXmlFile<ToyOrder>("src/data/toy orders.xml");
-  data1.forEach((e: ToyOrder) => { logger.info("%o", e) })
-}
-start();
-
-// async function Main(){
-//   const data = await readCSVFile("src/data/cake orders.csv", true);
-//   data.forEach(row=>{logger.info(row)})
+// async function start() {
+//   //const data = await parseJsonFile<PetOrder>("src/data/pet orders.json");
+//   //data?.forEach((e: PetOrder) => { logger.info("%o", e) })
+//   const data1 = await parseXmlFile<ToyOrder>("src/data/toy orders.xml");
+//   data1.forEach((e: ToyOrder) => { logger.info("%o", e) })
 // }
+// start();
 
-// Main();
+async function Main() {
+  const data = await readCSVFile("src/data/cake orders.csv", true);
+  data.forEach(row => { logger.info("%o", row) })
+}
+
+Main();
 
 // const orders = [
 //   { id: 1, item: "Sponge", price: 15 },
