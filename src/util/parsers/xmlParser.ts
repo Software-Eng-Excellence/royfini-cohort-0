@@ -23,7 +23,7 @@ export async function parseXmlFile<T>(filePath: string): Promise<T[]> {
         // Read the file content asynchronously
         const fileContent = await fs.readFile(filePath, 'utf-8');
         // Parse the XML content
-        const parsedData = await parseStringPromise(fileContent, { explicitArray: false ,explicitRoot: false});
+        const parsedData = await parseStringPromise(fileContent, { explicitArray: false, explicitRoot: false });
         const data = parsedData.row
         return data as T[]
     } catch (error: unknown) {

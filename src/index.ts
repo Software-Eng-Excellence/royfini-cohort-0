@@ -4,6 +4,7 @@ import { readCSVFile } from "./util/parsers/csvParser";
 import { parseJsonFile } from "./util/parsers/jsonParser";
 import { PetOrder, ToyOrder } from "./models";
 import { parseXmlFile } from "./util/parsers/xmlParser";
+import { ClothingOrder } from "models/clothingOrder";
 
 // async function start() {
 //   //const data = await parseJsonFile<PetOrder>("src/data/pet orders.json");
@@ -14,7 +15,7 @@ import { parseXmlFile } from "./util/parsers/xmlParser";
 // start();
 
 async function Main() {
-  const data = await readCSVFile("src/data/cake orders.csv", true);
+  const data = await readCSVFile<ClothingOrder>("src/data/clothing orders.csv", true);
   data.forEach(row => { logger.info("%o", row) })
 }
 
