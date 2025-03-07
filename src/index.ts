@@ -2,11 +2,14 @@ import { Console } from "console";
 import logger from "./util/logger";
 import { readCSVFile } from "./util/parsers/csvParser";
 import { parseJsonFile } from "./util/parsers/jsonParser";
-import { PetOrder } from "models";
+import { PetOrder, ToyOrder } from "./models";
+import { parseXmlFile } from "./util/parsers/xmlParser";
 
 async function start() {
-  const data = await parseJsonFile<PetOrder>("src/data/pet orders.json");
-  data?.forEach((e: PetOrder) => { logger.info("%o", e) })
+  //const data = await parseJsonFile<PetOrder>("src/data/pet orders.json");
+  //data?.forEach((e: PetOrder) => { logger.info("%o", e) })
+  const data1 = await parseXmlFile<ToyOrder>("src/data/toy orders.xml");
+  data1.forEach((e: ToyOrder) => { logger.info("%o", e) })
 }
 start();
 
