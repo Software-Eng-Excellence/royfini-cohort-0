@@ -1,4 +1,4 @@
 export * from "./bookOrder";
 export * from "./petOrder";
-export * from "./toyOrder";
-export * from "./furnitureOrder";
+export * from "./xml/toyOrder";
+export * from "./xml/furnitureOrder";
