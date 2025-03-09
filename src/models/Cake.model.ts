@@ -5,8 +5,8 @@ export class Cake implements IItem {
         private type: string,
         private flavor: string,
         private filling: string,
-        private size: string,
-        private layers: string,
+        private size: number,
+        private layers: number,
         private frostingType: string,
         private frostingFlavor: string,
         private decorationType: string,
@@ -34,11 +34,11 @@ export class Cake implements IItem {
         return this.filling;
     }
 
-    getSize(): string {
+    getSize(): number {
         return this.size;
     }
 
-    getLayers(): string {
+    getLayers(): number {
         return this.layers;
     }
 
