@@ -1,8 +1,8 @@
-import { IItem } from "./Item.model";
+import { IItem } from "./IItem";
 
-interface Order{
+interface Order {
     getItems(): IItem;
     getPrice(): number;
     getQuantity(): number;
-    getId():string;
+    getId(): string;
 }
