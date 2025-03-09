@@ -1,13 +1,3 @@
-import logger from "./util/logger";
-import { readCSVFile } from "./util/parsers/csvParser";
-
-async function Main(){
-  const data = await readCSVFile("src/data/cake orders.csv", true);
-  data.forEach(row=>{logger.info(row)})
-}
-
-Main();
-
 // const orders = [
 //   { id: 1, item: "Sponge", price: 15 },
 //   { id: 2, item: "Chocolate", price: 20 },
