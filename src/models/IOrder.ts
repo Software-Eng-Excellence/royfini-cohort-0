@@ -1,8 +1,8 @@
 import { IItem } from "./IItem";
 
-interface IOrder {
+interface IOrder{
     getItems(): IItem;
     getPrice(): number;
     getQuantity(): number;
-    getId(): string;
+    getId():string;
 }
