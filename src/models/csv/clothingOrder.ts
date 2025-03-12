@@ -1,14 +1,14 @@
 export interface ClothingOrder {
-    orderId: string;
-    clothingType: string;
-    size: string;
-    color: string;
-    material: string;
-    pattern: string;
-    brand: string;
-    gender: string;
-    packaging: string;
-    specialRequest: string;
-    price: string;
-    quantity: string;
-  }
+  "Order ID": string;
+  "Clothing Type": string;
+  Size: string;
+  Color: string;
+  Material: string;
+  Pattern: string;
+  Brand: string;
+  Gender: string;
+  Packaging: string;
+  "Special Request": string;
+  Price: string;
+  Quantity: string;
+}

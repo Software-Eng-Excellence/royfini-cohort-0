@@ -17,6 +17,10 @@ export class CakeBuilder {
     private specialIngredients!: string;
     private packagingType!: string
 
+    public static newBuilder(): CakeBuilder {
+        return new CakeBuilder();
+    }
+
     setType(type: string): CakeBuilder {
         this.type = type;
         return this
@@ -92,7 +96,7 @@ export class CakeBuilder {
             this.allergies, this.specialIngredients, this.packagingType
         ];
         for (const property of requiredProperties) {
-            if (!property) {
+            if (property === null || property === undefined) {
                 logger.error("Missing required properties, could not build a cake");
                 throw new Error("Missing required properties")
             }

@@ -1,6 +1,6 @@
 import { IItem } from "./IItem";
 
-interface IOrder{
+export interface IOrder{
     getItems(): IItem;
     getPrice(): number;
     getQuantity(): number;
