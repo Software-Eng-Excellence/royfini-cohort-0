@@ -1,4 +1,4 @@
-export interface Order {
+export interface FurnitureOrder {
     OrderID: string;
     Type: string;
     Material: string;
