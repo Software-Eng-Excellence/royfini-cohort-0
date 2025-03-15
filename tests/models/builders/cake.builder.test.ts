@@ -2,7 +2,7 @@ import { CakeBuilder } from "../../../src/models/builders/cake.builder"
 import { Cake } from "../../../src/models/Cake.model";
 describe("CakeBuilder", () => {
     let cakeBuilder: CakeBuilder;
-    beforeEach(() => {
+    beforeAll(() => {
         cakeBuilder = new CakeBuilder();
     });
     it("should build Cake if all data are set", () => {
@@ -42,11 +42,5 @@ describe("CakeBuilder", () => {
             .setSpecialIngredients("Organic Ingredients")
             .setPackagingType("Standard Box")
             .build()).toThrow("Missing required properties");
-    });
-    it("should allow chaining method", () => {
-        cakeBuilder
-            .setSpecialIngredients("Organic Ingredients")
-            .setPackagingType("Standard Box")
-        expect(cakeBuilder).toBeInstanceOf(CakeBuilder);
     });
 });

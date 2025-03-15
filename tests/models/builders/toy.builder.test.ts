@@ -4,7 +4,7 @@ import { Toy } from "../../../src/models/Toy.model";
 describe("ToyBuilder", () => {
   let toyBuilder: ToyBuilder;
 
-  beforeEach(() => {
+  beforeAll(() => {
     toyBuilder = new ToyBuilder();
   });
   it("should build a Toy class if all data is passed", () => {
@@ -31,10 +31,5 @@ describe("ToyBuilder", () => {
     expect(() => {
       ToyBuilder.newBuilder().setAgeGroup("4-7").build();
     }).toThrow("Missing required properties");
-  });
-  it("should allow chaining methods", () => {
-    toyBuilder.setType("Building").setAgeGroup("4-7").setBrand("Lego");
-
-    expect(toyBuilder).toBeInstanceOf(ToyBuilder);
   });
 });

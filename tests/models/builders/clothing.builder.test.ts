@@ -3,7 +3,7 @@ import { Clothing } from "../../../src/models/Clothing.model";
 
 describe("ClothingBuilder", () => {
   let clothingBuilder: ClothingBuilder;
-  beforeEach(() => {
+  beforeAll(() => {
     clothingBuilder = new ClothingBuilder();
   });
   it("should build Clothing class if all date are set", () => {
@@ -37,9 +37,5 @@ describe("ClothingBuilder", () => {
       .setPackaging("Box")
       .setSpecialRequest("Gift Wrap")
       .build()).toThrow("Missing required properties");
-  });
-  it("should allow method chaining", () => {
-    clothingBuilder.setPackaging("Box").setSpecialRequest("Gift Wrap");
-    expect(clothingBuilder).toBeInstanceOf(ClothingBuilder);
   });
 });

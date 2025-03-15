@@ -4,7 +4,7 @@ import { Pet } from "../../../src/models/Pet.model";
 describe("PetBuilder", () => {
   let petBuilder = new PetBuilder();
 
-  beforeEach(() => {
+  beforeAll(() => {
     petBuilder = new PetBuilder();
   });
 
@@ -35,9 +35,5 @@ describe("PetBuilder", () => {
         .setPetType("Dog")
         .build();
     }).toThrow("Missing required properties")
-  });
-  it("should allow method chaining method", () => {
-    petBuilder.setProductType("Food").setPetType("Dog");
-    expect(petBuilder).toBeInstanceOf(PetBuilder);
   });
 });

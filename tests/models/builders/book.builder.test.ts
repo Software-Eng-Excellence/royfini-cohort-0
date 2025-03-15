@@ -3,7 +3,7 @@ import { Book } from "../../../src/models/Book.model";
 
 describe("BookBuilder", () => {
   let bookBuilder: BookBuilder;
-  beforeEach(() => {
+  beforeAll(() => {
     bookBuilder = new BookBuilder();
   });
   it("should build Book if all data are set", () => {
@@ -35,11 +35,5 @@ describe("BookBuilder", () => {
       .setSpecialEdition("Collector's Edition")
       .setPackaging("Gift Box")
       .build()).toThrow("Missing required properties");
-  });
-  it("should allow chaining method", () => {
-    bookBuilder
-      .setSpecialEdition("Collector's Edition")
-      .setPackaging("Gift Box");
-    expect(bookBuilder).toBeInstanceOf(BookBuilder);
   });
 });

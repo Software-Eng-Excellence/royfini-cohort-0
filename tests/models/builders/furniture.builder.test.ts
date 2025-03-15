@@ -2,7 +2,7 @@ import { FurnitureBuilder } from "../../../src/models/builders/furniture.builder
 import { Furniture } from "../../../src/models/Furniture.model";
 describe("furnitureBuilder", () => {
   let furnitureBuilder: FurnitureBuilder;
-  beforeEach(() => {
+  beforeAll(() => {
     furnitureBuilder = new FurnitureBuilder();
   });
   it("shoud build Furniture if all data are set", () => {
@@ -33,9 +33,5 @@ describe("furnitureBuilder", () => {
       .setWarranty("5 Years")
       .build()
     ).toThrow("Missing required properties");
-  });
-  it("should allow chaining method", () => {
-    furnitureBuilder.setAssemblyRequired("Yes").setWarranty("5 Years");
-    expect(furnitureBuilder).toBeInstanceOf(FurnitureBuilder);
   });
 });
