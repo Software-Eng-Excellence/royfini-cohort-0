@@ -6,8 +6,8 @@ export interface BookOrder {
     "Format": string;
     "Language": string;
     "Publisher": string;
-    "Special Edition"?: string;
-    "Packaging"?: string;
+    "Special Edition": string;
+    "Packaging": string;
     "Price": string;
     "Quantity": string;
   }
