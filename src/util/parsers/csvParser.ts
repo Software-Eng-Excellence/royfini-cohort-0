@@ -1,5 +1,6 @@
 import * as fs from "fs/promises";
 import { parse } from "csv-parse";
+import { stringify as csvStringify } from "csv-stringify";
 
 export async function readCSVFile<T>(
   filePath: string,
@@ -34,5 +35,33 @@ export async function readCSVFile<T>(
     });
   } catch (error) {
     throw new Error(`Error reading CSV file: ${error}`);
+  }
+}
+export async function writeCSVFile<T extends Record<string, any>>(
+  filePath: string,
+  data: T[],
+  includeHeader: boolean = false
+): Promise<void> {
+  try {
+    if (data.length === 0) {
+      throw new Error("No data to write");
+    }
+
+    const headers = Object.keys(data[0]); // Extract headers from first object
+
+    const csvContent = await new Promise<string>((resolve, reject) => {
+      csvStringify(
+        data.map((obj) => headers.map((header) => obj[header] ?? "")), // Ensure values are properly mapped
+        { header: includeHeader, columns: headers },
+        (err, output) => {
+          if (err) return reject(err);
+          resolve(output);
+        }
+      );
+    });
+
+    await fs.writeFile(filePath, csvContent, "utf-8");
+  } catch (error) {
+    throw new Error(`Error writing CSV file: ${error}`);
   }
 }

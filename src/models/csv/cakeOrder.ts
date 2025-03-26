@@ -1,5 +1,5 @@
 export interface CakeOrder {
-  id: string;
+  id?: string;
   Type: string;
   Flavor: string;
   Filling: string;
@@ -14,7 +14,7 @@ export interface CakeOrder {
   Allergies: string;
   "Special Ingredients": string;
   "Packaging Type": string;
-  Price: string;
-  Quantity: string;
+  Price?: string;
+  Quantity?: string;
 }
   
