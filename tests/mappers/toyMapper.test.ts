@@ -30,4 +30,13 @@ describe("Toy Mapper", () => {
             educational: "Yes",
         });
     });
+    it("should throw an error when required fields are missing", () => {
+        const incompleteData = {
+            OrderID: 1234,
+            Type: "Action Figure",
+            // Missing AgeGroup, Brand, and other required fields
+        } as unknown as ToyOrder;
+
+        expect(() => toyMapper.map(incompleteData)).toThrowError();
+    });
 });

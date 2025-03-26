@@ -34,4 +34,14 @@ describe("Clothing Mapper", () => {
             specialRequest: "None"
         });
     })
+    it("should throw an error when required fields are missing", () => {
+        const incompleteData = {
+          "Clothing Type": "Jeans",
+          Size: "XL",
+          Color: "Red",
+          // Missing Material, Pattern, and other required fields
+        } as unknown as ClothingOrder;
+        
+        expect(() => clothingMapper.map(incompleteData)).toThrowError();
+      });
 })

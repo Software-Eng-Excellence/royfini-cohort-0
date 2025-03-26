@@ -30,7 +30,8 @@ describe("PetBuilder", () => {
   });
   it("should throw an error if not all data are set", () => {
     expect(() => {
-      petBuilder
+      PetBuilder
+        .newBuilder()
         .setProductType("Food")
         .setPetType("Dog")
         .build();

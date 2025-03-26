@@ -38,7 +38,7 @@ describe("CakeBuilder", () => {
         });
     });
     it("should throw an error if not all data are set", () => {
-        expect(() => cakeBuilder
+        expect(() => CakeBuilder.newBuilder()
             .setSpecialIngredients("Organic Ingredients")
             .setPackagingType("Standard Box")
             .build()).toThrow("Missing required properties");

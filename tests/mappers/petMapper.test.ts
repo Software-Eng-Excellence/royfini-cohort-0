@@ -30,4 +30,13 @@ describe("Pet Mapper", () => {
             ecoFriendly: "Yes",
         });
     });
+    it("should throw an error when required fields are missing", () => {
+        const incompleteData = {
+            "Product Type": "Food",
+            "Pet Type": "Dog",
+            // Missing Brand, Size, and other required fields
+        } as unknown as PetOrder;
+        
+        expect(() => petMapper.map(incompleteData)).toThrowError();
+    });
 });

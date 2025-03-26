@@ -33,4 +33,13 @@ describe("Book Mapper", () => {
       packaging: "Eco-Friendly Packaging",
     });
   });
+  it("should throw an error when required fields are missing", () => {
+    const incompleteData = {
+      "Book Title": "Echoes of Silence",
+      Author: "Ernest Hemingway",
+      // Missing Genre, Format, and other required fields
+    } as unknown as BookOrder;
+    
+    expect(() => bookMapper.map(incompleteData)).toThrowError();
+  });
 });

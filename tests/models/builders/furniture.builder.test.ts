@@ -28,7 +28,7 @@ describe("furnitureBuilder", () => {
     });
   });
   it("should throw an error if not all data are set", () => {
-    expect(()=>furnitureBuilder
+    expect(() => FurnitureBuilder.newBuilder()
       .setAssemblyRequired("Yes")
       .setWarranty("5 Years")
       .build()

@@ -33,7 +33,7 @@ describe("ClothingBuilder", () => {
     });
   });
   it("should throw an error if not all data are set", () => {
-    expect(()=>clothingBuilder
+    expect(() => ClothingBuilder.newBuilder()
       .setPackaging("Box")
       .setSpecialRequest("Gift Wrap")
       .build()).toThrow("Missing required properties");

@@ -45,4 +45,13 @@ describe("Cake Mapper", () => {
       packagingType: "Standard Box",
     });
   });
+  it("should throw an error when required fields are missing", () => {
+    const incompleteData = {
+      Type: "Birthday",
+      Flavor: "Caramel",
+      // Missing Size and Layers
+    } as unknown as CakeOrder;
+
+    expect(() => cakeMapper.map(incompleteData)).toThrowError();
+  });
 });

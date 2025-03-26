@@ -31,7 +31,7 @@ describe("BookBuilder", () => {
     });
   });
   it("should throw an error if not all data are set", () => {
-    expect(()=>bookBuilder
+    expect(() => BookBuilder.newBuilder()
       .setSpecialEdition("Collector's Edition")
       .setPackaging("Gift Box")
       .build()).toThrow("Missing required properties");

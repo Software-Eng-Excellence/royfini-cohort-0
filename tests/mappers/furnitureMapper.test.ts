@@ -33,4 +33,13 @@ describe("Furniture Mapper", () => {
             warranty: "2 years",
         });
     });
+    it("should throw an error when required fields are missing", () => {
+        const incompleteData = {
+            Type: "Chair",
+            Material: "Wood",
+            // Missing Color, Size, Style, etc.
+        } as unknown as FurnitureOrder;
+        
+        expect(() => furnitureMapper.map(incompleteData)).toThrowError();
+    });
 });

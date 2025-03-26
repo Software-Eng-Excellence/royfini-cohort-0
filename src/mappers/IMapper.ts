@@ -1,3 +1,3 @@
 export interface IMapper<T, U> {
-  map(_:T): U;
+  map(data: T): U;
 }
