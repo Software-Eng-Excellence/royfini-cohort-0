@@ -102,3 +102,65 @@ export class SQLiteCakeMapper implements IMapper<SQLiteCake, IdentifiableCake> {
     };
   }
 }
+export interface PostgreSqlCake {
+  id: string;
+  type: string;
+  flavor: string;
+  filling: string;
+  size: number;
+  layers: number;
+  frostingtype: string;
+  frostingflavor: string;
+  decorationtype: string;
+  decorationcolor: string;
+  custommessage: string;
+  shape: string;
+  allergies: string;
+  specialingredients: string;
+  packagingtype: string;
+}
+export class PostgreSqlCakeMapper
+  implements IMapper<PostgreSqlCake, IdentifiableCake> {
+  map(data: PostgreSqlCake): IdentifiableCake {
+    return IdentifiableCakeBuilder.newBuilder()
+      .setCake(
+        CakeBuilder.newBuilder()
+          .setType(data.type)
+          .setFlavor(data.flavor)
+          .setFilling(data.filling)
+          .setSize(data.size)
+          .setLayers(data.layers)
+          .setFrostingType(data.frostingtype)
+          .setFrostingFlavor(data.frostingflavor)
+          .setDecorationType(data.decorationtype)
+          .setDecorationColor(data.decorationcolor)
+          .setCustomMessage(data.custommessage)
+          .setShape(data.shape)
+          .setAllergies(data.allergies)
+          .setSpecialIngredients(data.specialingredients)
+          .setPackagingType(data.packagingtype)
+          .build()
+      )
+      .setId(data.id)
+      .build();
+  }
+  reverseMap(data: IdentifiableCake): PostgreSqlCake {
+    return {
+      id: data.getId(),
+      type: data.getType(),
+      flavor: data.getFlavor(),
+      filling: data.getFilling(),
+      size: data.getSize(),
+      layers: data.getLayers(),
+      frostingtype: data.getFrostingType(),
+      frostingflavor: data.getFrostingFlavor(),
+      decorationtype: data.getDecorationType(),
+      decorationcolor: data.getDecorationColor(),
+      custommessage: data.getCustomMessage(),
+      shape: data.getShape(),
+      allergies: data.getAllergies(),
+      specialingredients: data.getSpecialIngredients(),
+      packagingtype: data.getPackagingType(),
+    };
+  }
+}

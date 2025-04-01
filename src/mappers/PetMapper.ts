@@ -4,6 +4,9 @@ import { Pet } from "../models/Pet.model";
 import { IMapper } from "./IMapper";
 
 export class JSONPetMapper implements IMapper<PetOrder, Pet> {
+  reverseMap(data: Pet): PetOrder {
+    throw new Error("Method not implemented.");
+  }
   map(data: PetOrder): Pet {
     return PetBuilder.newBuilder()
       .setProductType(data["Product Type"])

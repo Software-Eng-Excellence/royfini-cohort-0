@@ -4,6 +4,9 @@ import { BookOrder } from "../models/json/bookOrder";
 import { IMapper } from "./IMapper";
 
 export class JSONBookMapper implements IMapper<BookOrder, Book> {
+  reverseMap(data: Book): BookOrder {
+    throw new Error("Method not implemented.");
+  }
   map(data: BookOrder): Book {
     return BookBuilder.newBuilder()
       .setBookTitle(data["Book Title"])

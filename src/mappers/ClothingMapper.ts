@@ -3,6 +3,9 @@ import { Clothing } from "../models/Clothing.model";
 import { ClothingOrder } from "../models/csv/clothingOrder";
 import { IMapper } from "./IMapper";
 export class CSVClothingMapper implements IMapper<ClothingOrder, Clothing> {
+  reverseMap(data: Clothing): ClothingOrder {
+    throw new Error("Method not implemented.");
+  }
   map(data: ClothingOrder): Clothing {
     return ClothingBuilder.newBuilder()
       .setClothingType(data["Clothing Type"])

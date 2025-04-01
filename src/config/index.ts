@@ -6,4 +6,7 @@ dotenv.config({ path: path.join(__dirname, "../../.env") });
 export default {
   NODE_ENV: process.env.NODE_ENV || "development", // Checks if the environment type (e.g., 'production' or 'development') is set; if not, it uses 'development' as default.
   logDir: "logs", // Specifies the folder where log files will be saved
+  storagePath:{
+    postgreSql: "postgresql://neondb_owner:npg_TKckdu24BvhE@ep-royal-truth-a54rb9d5-pooler.us-east-2.aws.neon.tech/neondb?sslmode=require"
+  }
 };
