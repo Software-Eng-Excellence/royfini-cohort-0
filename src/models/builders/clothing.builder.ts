@@ -1,4 +1,4 @@
-import { Clothing } from "../Clothing.model";
+import { Clothing, IdentifiableClothing } from "../Clothing.model";
 
 export class ClothingBuilder {
   private clothingType!: string;
@@ -92,6 +92,49 @@ export class ClothingBuilder {
       this.gender,
       this.packaging,
       this.specialRequest
+    );
+  }
+}
+export class IdentifiableClothingBuilder {
+  private id!: string;
+  private clothing!: Clothing;
+
+  static newBuilder(): IdentifiableClothingBuilder {
+    return new IdentifiableClothingBuilder();
+  }
+
+  setId(id: string): IdentifiableClothingBuilder {
+    this.id = id;
+    return this;
+  }
+  setClothing(clothing: Clothing): IdentifiableClothingBuilder {
+    this.clothing = clothing;
+    this.clothing.getClothingType();
+    this.clothing.getSize();
+    this.clothing.getColor();
+    this.clothing.getMaterial();
+    this.clothing.getPattern();
+    this.clothing.getBrand();
+    this.clothing.getGender();
+    this.clothing.getPackaging();
+    this.clothing.getSpecialRequest();
+    return this;
+  }
+  build(): IdentifiableClothing {
+    if (!this.id || !this.clothing) {
+      throw new Error("Missing required properties");
+    }
+    return new IdentifiableClothing(
+      this.id,
+      this.clothing.getClothingType(),
+      this.clothing.getSize(),
+      this.clothing.getColor(),
+      this.clothing.getMaterial(),
+      this.clothing.getPattern(),
+      this.clothing.getBrand(),
+      this.clothing.getGender(),
+      this.clothing.getPackaging(),
+      this.clothing.getSpecialRequest(),
     );
   }
 }

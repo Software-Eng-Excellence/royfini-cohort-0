@@ -1,4 +1,5 @@
-import { IItem, ItemCategory } from "./IItem";
+import { IIdentifiableItem, IItem, ItemCategory } from "./IItem";
+import { id } from "../repository/IRepository";
 
 export class Furniture implements IItem {
     constructor(
@@ -43,4 +44,30 @@ export class Furniture implements IItem {
         return this.warranty;
     }
 
+}
+export class IdentifiableFurniture extends Furniture implements IIdentifiableItem {
+    constructor(
+        private id: id,
+        type: string,
+        material: string,
+        color: string,
+        size: string,
+        style: string,
+        assemblyRequired: string,
+        warranty: string,
+    ) {
+        super(
+            type,
+            material,
+            color,
+            size,
+            style,
+            assemblyRequired,
+            warranty,
+        );
+    }
+
+    getId(): string {
+        return this.id;
+    }
 }

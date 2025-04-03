@@ -1,4 +1,4 @@
-import { Toy } from "../Toy.model";
+import { IdentifiableToy, Toy } from "../Toy.model";
 
 export class ToyBuilder {
   private type!: string;
@@ -68,6 +68,43 @@ export class ToyBuilder {
       this.material,
       this.batteryRequired,
       this.educational
+    );
+  }
+}
+export class IdentifiableToyBuilder {
+  private id!: string;
+  private toy!: Toy;
+
+  static newBuilder(): IdentifiableToyBuilder {
+    return new IdentifiableToyBuilder();
+  }
+
+  setId(id: string): IdentifiableToyBuilder {
+    this.id = id;
+    return this;
+  }
+  setToy(toy: Toy): IdentifiableToyBuilder {
+    this.toy = toy;
+    this.toy.getType();
+    this.toy.getAgeGroup();
+    this.toy.getBrand();
+    this.toy.getMaterial();
+    this.toy.getBatteryRequired();
+    this.toy.getEducational();
+    return this;
+  }
+  build(): IdentifiableToy {
+    if (!this.id || !this.toy) {
+      throw new Error("Missing required properties");
+    }
+    return new IdentifiableToy(
+      this.id,
+      this.toy.getType(),
+      this.toy.getAgeGroup(),
+      this.toy.getBrand(),
+      this.toy.getMaterial(),
+      this.toy.getBatteryRequired(),
+      this.toy.getEducational(),
     );
   }
 }

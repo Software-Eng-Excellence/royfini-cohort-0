@@ -1,4 +1,4 @@
-import { Pet } from "../Pet.model";
+import { IdentifiablePet, Pet } from "../Pet.model";
 
 export class PetBuilder {
   private productType!: string;
@@ -68,6 +68,43 @@ export class PetBuilder {
       this.size,
       this.flavor,
       this.ecoFriendly
+    );
+  }
+}
+export class IdentifiablePetBuilder {
+  private id!: string;
+  private pet!: Pet;
+
+  static newBuilder(): IdentifiablePetBuilder {
+    return new IdentifiablePetBuilder();
+  }
+
+  setId(id: string): IdentifiablePetBuilder {
+    this.id = id;
+    return this;
+  }
+  setPet(pet: Pet): IdentifiablePetBuilder {
+    this.pet = pet;
+    this.pet.getPetType();
+    this.pet.getSize();
+    this.pet.getEcoFriendly();
+    this.pet.getFlavor();
+    this.pet.getBrand();
+    this.pet.getProductType();
+    return this;
+  }
+  build(): IdentifiablePet {
+    if (!this.id || !this.pet) {
+      throw new Error("Missing required properties");
+    }
+    return new IdentifiablePet(
+      this.id,
+      this.pet.getPetType(),
+      this.pet.getSize(),
+      this.pet.getEcoFriendly(),
+      this.pet.getFlavor(),
+      this.pet.getBrand(),
+      this.pet.getProductType(),
     );
   }
 }
