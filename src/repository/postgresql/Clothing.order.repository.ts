@@ -7,7 +7,7 @@ import {
 } from "../../util/exceptions/repositoryExceptions";
 import { id, Initializable, IRepository } from "../IRepository";
 import { ConnectionManager } from "./ConnectionManager";
-import { PostgreSqlClothing, PostgreSqlClothingMapper } from "mappers/ClothingMapper";
+import { PostgreSqlClothing, PostgreSqlClothingMapper } from "../../mappers/ClothingMapper";
 const tableName = ItemCategory.CLOTHING;
 const CREATE_TABLE = `CREATE TABLE IF NOT EXISTS ${tableName}(
     id TEXT PRIMARY KEY,
@@ -19,7 +19,7 @@ const CREATE_TABLE = `CREATE TABLE IF NOT EXISTS ${tableName}(
     brand TEXT NOT NULL,
     gender TEXT NOT NULL,
     packaging TEXT NOT NULL,
-    specialRequest TEXT NOT NULL,)`;
+    specialRequest TEXT NOT NULL)`;
 const INSERT_CLOTHING = `INSERT INTO ${tableName} (
       id, clothingType, size, color, material, pattern, brand, gender, packaging, specialRequest
   ) 
@@ -28,7 +28,7 @@ const INSERT_CLOTHING = `INSERT INTO ${tableName} (
 const SELECT_BY_ID = `SELECT * FROM ${tableName} WHERE id = $1`;
 const SELECT_ALL = `SELECT * FROM ${tableName}`;
 const UPDATE_ID = `UPDATE ${tableName} SET clothingType = $1 , size = $2, color = $3, material = $4, pattern = $5, brand = $6, gender = $7, 
-    packaging = $8 ,  specialRequest = $9 `;
+    packaging = $8 ,  specialRequest = $9 WHERE id = $10`;
 const DELETE_ID = `DELETE FROM ${tableName} WHERE id = $1`;
 export class ClothingRepository
     implements IRepository<IdentifiableClothing>, Initializable {
@@ -36,7 +36,7 @@ export class ClothingRepository
         let client;
         try {
             client = await ConnectionManager.getConnection();
-            client.query(CREATE_TABLE);
+            await client.query(CREATE_TABLE);
         } catch (error) {
             throw new InitializationException(
                 "Failed to initialize Order table",
@@ -48,7 +48,7 @@ export class ClothingRepository
         let client;
         try {
             client = await ConnectionManager.getConnection();
-            client.query(INSERT_CLOTHING, [
+            await client.query(INSERT_CLOTHING, [
                 item.getId(),
                 item.getClothingType(),
                 item.getSize(),

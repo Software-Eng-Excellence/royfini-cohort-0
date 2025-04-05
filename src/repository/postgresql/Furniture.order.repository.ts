@@ -1,4 +1,3 @@
-import { IdentifiableClothing } from "models/Clothing.model";
 import { ItemCategory } from "../../models/IItem";
 import {
     DbException,
@@ -7,8 +6,7 @@ import {
 } from "../../util/exceptions/repositoryExceptions";
 import { id, Initializable, IRepository } from "../IRepository";
 import { ConnectionManager } from "./ConnectionManager";
-import { PostgreSqlClothing, PostgreSqlClothingMapper } from "mappers/ClothingMapper";
-import { PostgreSqlFurniture, PostgreSqlFurnitureMapper } from "mappers/FurnitureMapper";
+import { PostgreSqlFurniture, PostgreSqlFurnitureMapper } from "../../mappers/FurnitureMapper";
 import { IdentifiableFurniture } from "models/Furniture.model";
 const tableName = ItemCategory.CLOTHING;
 const CREATE_TABLE = `CREATE TABLE IF NOT EXISTS ${tableName}(
@@ -19,7 +17,7 @@ const CREATE_TABLE = `CREATE TABLE IF NOT EXISTS ${tableName}(
     size TEXT NOT NULL,
     style TEXT NOT NULL,
     assemblyRequired TEXT NOT NULL,
-    warranty TEXT NOT NULL,)`;
+    warranty TEXT NOT NULL)`;
 const INSERT_FURNITURE = `INSERT INTO ${tableName} (
       id, type ,
     material ,
@@ -33,7 +31,7 @@ const INSERT_FURNITURE = `INSERT INTO ${tableName} (
       ($1, $2, $3, $4, $5, $6, $7, $8);`;
 const SELECT_BY_ID = `SELECT * FROM ${tableName} WHERE id = $1`;
 const SELECT_ALL = `SELECT * FROM ${tableName}`;
-const UPDATE_ID = `UPDATE ${tableName} SET type = $1 , material = $2, color = $3, size = $4, style = $5, assemblyRequired = $6, warranty = $7`;
+const UPDATE_ID = `UPDATE ${tableName} SET type = $1 , material = $2, color = $3, size = $4, style = $5, assemblyRequired = $6, warranty = $7 WHERE id = $8`;
 const DELETE_ID = `DELETE FROM ${tableName} WHERE id = $1`;
 export class FurnitureRepository
     implements IRepository<IdentifiableFurniture>, Initializable {
@@ -41,7 +39,7 @@ export class FurnitureRepository
         let client;
         try {
             client = await ConnectionManager.getConnection();
-            client.query(CREATE_TABLE);
+            await client.query(CREATE_TABLE);
         } catch (error) {
             throw new InitializationException(
                 "Failed to initialize Order table",
@@ -53,7 +51,7 @@ export class FurnitureRepository
         let client;
         try {
             client = await ConnectionManager.getConnection();
-            client.query(INSERT_FURNITURE, [
+            await client.query(INSERT_FURNITURE, [
                 item.getId(),
                 item.getType(),
                 item.getMaterial(),

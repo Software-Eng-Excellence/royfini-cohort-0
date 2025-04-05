@@ -1,5 +1,5 @@
-import { CakeBuilder } from "../../../src/models/builders/cake.builder"
-import { Cake } from "../../../src/models/Cake.model";
+import { CakeBuilder, IdentifiableCakeBuilder } from "../../../src/models/builders/cake.builder"
+import { Cake, IdentifiableCake } from "../../../src/models/Cake.model";
 describe("CakeBuilder", () => {
     let cakeBuilder: CakeBuilder;
     beforeAll(() => {
@@ -42,5 +42,63 @@ describe("CakeBuilder", () => {
             .setSpecialIngredients("Organic Ingredients")
             .setPackagingType("Standard Box")
             .build()).toThrow("Missing required properties");
+    });
+    const mockCake = {
+        getType: jest.fn(() => 'Birthday'),
+        getFlavor: jest.fn(() => 'Chocolate'),
+        getFilling: jest.fn(() => 'Vanilla'),
+        getSize: jest.fn(() => 3),
+        getLayers: jest.fn(() => 2),
+        getFrostingType: jest.fn(() => 'Buttercream'),
+        getFrostingFlavor: jest.fn(() => 'Strawberry'),
+        getDecorationType: jest.fn(() => 'Sprinkles'),
+        getDecorationColor: jest.fn(() => 'Red'),
+        getCustomMessage: jest.fn(() => 'Happy Birthday!'),
+        getShape: jest.fn(() => 'Round'),
+        getAllergies: jest.fn(() => 'Nuts'),
+        getSpecialIngredients: jest.fn(() => 'Love'),
+        getPackagingType: jest.fn(() => 'Box'),
+    } as unknown as Cake;
+    it('should build an IdentifiableCake with all properties', () => {
+        const cake = IdentifiableCakeBuilder
+            .newBuilder()
+            .setId('cake-123')
+            .setCake(mockCake)
+            .build();
+
+        expect(cake).toBeInstanceOf(IdentifiableCake);
+        expect(cake.getId()).toBe('cake-123');
+        expect(cake.getType()).toBe('Birthday');
+        expect(cake.getFlavor()).toBe('Chocolate');
+        expect(cake.getFilling()).toBe('Vanilla');
+        expect(cake.getSize()).toBe(3);
+        expect(cake.getLayers()).toBe(2);
+        expect(cake.getFrostingType()).toBe('Buttercream');
+        expect(cake.getFrostingFlavor()).toBe('Strawberry');
+        expect(cake.getDecorationType()).toBe('Sprinkles');
+        expect(cake.getDecorationColor()).toBe('Red');
+        expect(cake.getCustomMessage()).toBe('Happy Birthday!');
+        expect(cake.getShape()).toBe('Round');
+        expect(cake.getAllergies()).toEqual('Nuts');
+        expect(cake.getSpecialIngredients()).toEqual('Love');
+        expect(cake.getPackagingType()).toBe('Box');
+    });
+
+    it('should throw error if id is missing', () => {
+        expect(() => {
+            IdentifiableCakeBuilder
+                .newBuilder()
+                .setCake(mockCake)
+                .build();
+        }).toThrowError('Missing required properties');
+    });
+
+    it('should throw error if cake is missing', () => {
+        expect(() => {
+            IdentifiableCakeBuilder
+                .newBuilder()
+                .setId('cake-456')
+                .build();
+        }).toThrowError('Missing required properties');
     });
 });

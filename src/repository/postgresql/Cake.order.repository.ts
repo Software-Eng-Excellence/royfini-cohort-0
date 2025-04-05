@@ -44,7 +44,7 @@ export class CakeRepository
     let client;
     try {
       client = await ConnectionManager.getConnection();
-      client.query(CREATE_TABLE);
+      await client.query(CREATE_TABLE);
     } catch (error) {
       throw new InitializationException(
         "Failed to initialize Order table",
@@ -56,7 +56,7 @@ export class CakeRepository
     let client;
     try {
       client = await ConnectionManager.getConnection();
-      client.query(INSERT_CAKE, [
+      await client.query(INSERT_CAKE, [
         item.getId(),
         item.getType(),
         item.getFlavor(),

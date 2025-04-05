@@ -30,12 +30,12 @@ export interface PostgreSqlClothing {
   brand: string,
   gender: string,
   packaging: string,
-  specialRequest: string
+  specialrequest: string
 }
 export class PostgreSqlClothingMapper implements IMapper<PostgreSqlClothing, IdentifiableClothing> {
   map(data: PostgreSqlClothing): IdentifiableClothing {
     return IdentifiableClothingBuilder.newBuilder().setClothing(
-      ClothingBuilder.newBuilder().setClothingType(data.clothingtype).setBrand(data.brand).setColor(data.color).setGender(data.gender).setMaterial(data.material).setPackaging(data.packaging).setPattern(data.pattern).setSize(data.size).setSpecialRequest(data.specialRequest).build()
+      ClothingBuilder.newBuilder().setClothingType(data.clothingtype).setBrand(data.brand).setColor(data.color).setGender(data.gender).setMaterial(data.material).setPackaging(data.packaging).setPattern(data.pattern).setSize(data.size).setSpecialRequest(data.specialrequest).build()
     ).setId(data.id).build()
   }
   reverseMap(data: IdentifiableClothing): PostgreSqlClothing {
@@ -49,7 +49,7 @@ export class PostgreSqlClothingMapper implements IMapper<PostgreSqlClothing, Ide
       brand: data.getBrand(),
       gender: data.getGender(),
       packaging: data.getPackaging(),
-      specialRequest: data.getSpecialRequest()
+      specialrequest: data.getSpecialRequest()
     }
   }
 

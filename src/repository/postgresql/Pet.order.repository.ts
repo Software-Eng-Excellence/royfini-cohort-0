@@ -7,7 +7,7 @@ import {
 import { id, Initializable, IRepository } from "../IRepository";
 import { ConnectionManager } from "./ConnectionManager";
 import { IdentifiablePet } from "models/Pet.model";
-import { PostgreSqlPet, PostgreSqlPetMapper } from "mappers/PetMapper";
+import { PostgreSqlPet, PostgreSqlPetMapper } from "../../mappers/PetMapper";
 const tableName = ItemCategory.PET;
 const CREATE_TABLE = `CREATE TABLE IF NOT EXISTS ${tableName}(
     id TEXT PRIMARY KEY,
@@ -16,7 +16,7 @@ const CREATE_TABLE = `CREATE TABLE IF NOT EXISTS ${tableName}(
     brand TEXT NOT NULL,
     size TEXT NOT NULL,
     flavor TEXT NOT NULL,
-    ecoFriendly TEXT NOT NULL,`;
+    ecoFriendly TEXT NOT NULL)`;
 const INSERT_PET = `INSERT INTO ${tableName} (
       id, productType ,
     petType ,
@@ -29,7 +29,7 @@ const INSERT_PET = `INSERT INTO ${tableName} (
       ($1, $2, $3, $4, $5, $6, $7);`;
 const SELECT_BY_ID = `SELECT * FROM ${tableName} WHERE id = $1`;
 const SELECT_ALL = `SELECT * FROM ${tableName}`;
-const UPDATE_ID = `UPDATE ${tableName} SET productType = $1 , petType = $2, brand = $3, size = $4, flavor = $5, ecoFriendly = $6 `;
+const UPDATE_ID = `UPDATE ${tableName} SET productType = $1 , petType = $2, brand = $3, size = $4, flavor = $5, ecoFriendly = $6 WHERE id = $7`;
 const DELETE_ID = `DELETE FROM ${tableName} WHERE id = $1`;
 export class PetRepository
     implements IRepository<IdentifiablePet>, Initializable {
@@ -37,7 +37,7 @@ export class PetRepository
         let client;
         try {
             client = await ConnectionManager.getConnection();
-            client.query(CREATE_TABLE);
+            await client.query(CREATE_TABLE);
         } catch (error) {
             throw new InitializationException(
                 "Failed to initialize Order table",
@@ -49,7 +49,7 @@ export class PetRepository
         let client;
         try {
             client = await ConnectionManager.getConnection();
-            client.query(INSERT_PET, [
+            await client.query(INSERT_PET, [
                 item.getId(),
                 item.getProductType(),
                 item.getPetType(),
@@ -60,7 +60,7 @@ export class PetRepository
             ]);
             return item.getId();
         } catch (error) {
-            throw new DbException("Failed to create order", error as Error);
+            throw new DbException("Failed to create pet", error as Error);
         }
     }
     async get(id: id): Promise<IdentifiablePet> {

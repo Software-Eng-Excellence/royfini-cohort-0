@@ -1,5 +1,5 @@
-import { ToyBuilder } from "../../../src/models/builders/toy.builder";
-import { Toy } from "../../../src/models/Toy.model";
+import { IdentifiableToyBuilder, ToyBuilder } from "../../../src/models/builders/toy.builder";
+import { IdentifiableToy, Toy } from "../../../src/models/Toy.model";
 
 describe("ToyBuilder", () => {
   let toyBuilder: ToyBuilder;
@@ -31,5 +31,48 @@ describe("ToyBuilder", () => {
     expect(() => {
       ToyBuilder.newBuilder().setAgeGroup("4-7").build();
     }).toThrow("Missing required properties");
+  });
+  const mockToy = {
+    getType: jest.fn(() => 'Puzzle'),
+    getAgeGroup: jest.fn(() => '3-5'),
+    getBrand: jest.fn(() => 'Lego'),
+    getMaterial: jest.fn(() => 'Plastic'),
+    getBatteryRequired: jest.fn(() => false),
+    getEducational: jest.fn(() => true),
+  } as unknown as Toy;
+
+  it('should build an IdentifiableToy with all properties', () => {
+    const toy = IdentifiableToyBuilder
+      .newBuilder()
+      .setId('toy-123')
+      .setToy(mockToy)
+      .build();
+
+    expect(toy).toBeInstanceOf(IdentifiableToy);
+    expect(toy.getId()).toBe('toy-123');
+    expect(toy.getType()).toBe('Puzzle');
+    expect(toy.getAgeGroup()).toBe('3-5');
+    expect(toy.getBrand()).toBe('Lego');
+    expect(toy.getMaterial()).toBe('Plastic');
+    expect(toy.getBatteryRequired()).toBe(false);
+    expect(toy.getEducational()).toBe(true);
+  });
+
+  it('should throw error if id is missing', () => {
+    expect(() => {
+      IdentifiableToyBuilder
+        .newBuilder()
+        .setToy(mockToy)
+        .build();
+    }).toThrowError('Missing required properties');
+  });
+
+  it('should throw error if toy is missing', () => {
+    expect(() => {
+      IdentifiableToyBuilder
+        .newBuilder()
+        .setId('toy-456')
+        .build();
+    }).toThrowError('Missing required properties');
   });
 });

@@ -1,4 +1,5 @@
-import { XMLToyMapper } from "../../src/mappers/ToyMapper";
+import { PostgreSqlToy, PostgreSqlToyMapper, XMLToyMapper } from "../../src/mappers/ToyMapper";
+import { IdentifiableToyBuilder, ToyBuilder } from "../../src/models/builders/toy.builder";
 import { Toy } from "../../src/models/Toy.model";
 import { ToyOrder } from "../../src/models/xml/toyOrder";
 describe("Toy Mapper", () => {
@@ -15,6 +16,17 @@ describe("Toy Mapper", () => {
         Educational: "Yes",
         Price: 23,
         Quantity: 23
+    };
+    const mapper = new PostgreSqlToyMapper();
+
+    const dbToy: PostgreSqlToy = {
+        id: 'toy-202',
+        type: 'Puzzle',
+        agegroup: '3-5',
+        brand: 'Lego',
+        material: 'Plastic',
+        batteryrequired: 'No',
+        educational: 'Yes'
     };
 
     it("should create Toy model", () => {
@@ -38,5 +50,36 @@ describe("Toy Mapper", () => {
         } as unknown as ToyOrder;
 
         expect(() => toyMapper.map(incompleteData)).toThrowError();
+    });
+    it('should map PostgreSqlToy to IdentifiableToy', () => {
+        const result = mapper.map(dbToy);
+
+        expect(result.getId()).toBe(dbToy.id);
+        expect(result.getType()).toBe(dbToy.type);
+        expect(result.getAgeGroup()).toBe(dbToy.agegroup);
+        expect(result.getBrand()).toBe(dbToy.brand);
+        expect(result.getMaterial()).toBe(dbToy.material);
+        expect(result.getBatteryRequired()).toBe(dbToy.batteryrequired);
+        expect(result.getEducational()).toBe(dbToy.educational);
+    });
+
+    it('should reverseMap IdentifiableToy to PostgreSqlToy', () => {
+        const toy = ToyBuilder.newBuilder()
+            .setType(dbToy.type)
+            .setAgeGroup(dbToy.agegroup)
+            .setBrand(dbToy.brand)
+            .setMaterial(dbToy.material)
+            .setBatteryRequired(dbToy.batteryrequired)
+            .setEducational(dbToy.educational)
+            .build();
+
+        const identifiableToy = IdentifiableToyBuilder.newBuilder()
+            .setId(dbToy.id)
+            .setToy(toy)
+            .build();
+
+        const result = mapper.reverseMap(identifiableToy);
+
+        expect(result).toEqual(dbToy);
     });
 });

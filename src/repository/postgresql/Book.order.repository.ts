@@ -7,7 +7,7 @@ import {
 import { id, Initializable, IRepository } from "../IRepository";
 import { ConnectionManager } from "./ConnectionManager";
 import { IdentifiableBook } from "models/Book.model";
-import { PostgreSqlBook, PostgreSqlBookMapper } from "mappers/BookMapper";
+import { PostgreSqlBook, PostgreSqlBookMapper } from "../../mappers/BookMapper";
 const tableName = ItemCategory.BOOK;
 const CREATE_TABLE = `CREATE TABLE IF NOT EXISTS ${tableName}(
     id TEXT PRIMARY KEY,
@@ -18,7 +18,7 @@ const CREATE_TABLE = `CREATE TABLE IF NOT EXISTS ${tableName}(
     language TEXT NOT NULL,
     publisher TEXT NOT NULL,
     specialEdition TEXT NOT NULL,
-    packaging TEXT NOT NULL,)`;
+    packaging TEXT NOT NULL)`;
 const INSERT_BOOK = `INSERT INTO ${tableName} (
       id, bookTitle ,
     author ,
@@ -34,7 +34,7 @@ const INSERT_BOOK = `INSERT INTO ${tableName} (
 const SELECT_BY_ID = `SELECT * FROM ${tableName} WHERE id = $1`;
 const SELECT_ALL = `SELECT * FROM ${tableName}`;
 const UPDATE_ID = `UPDATE ${tableName} SET bookTitle = $1 , author = $2, genre = $3, format = $4, language = $5, publisher = $6, specialEdition = $7, 
-    packaging = $8`;
+    packaging = $8 WHERE id = $9`;
 const DELETE_ID = `DELETE FROM ${tableName} WHERE id = $1`;
 export class BookRepository
     implements IRepository<IdentifiableBook>, Initializable {
@@ -42,7 +42,7 @@ export class BookRepository
         let client;
         try {
             client = await ConnectionManager.getConnection();
-            client.query(CREATE_TABLE);
+            await client.query(CREATE_TABLE);
         } catch (error) {
             throw new InitializationException(
                 "Failed to initialize Order table",
@@ -54,7 +54,7 @@ export class BookRepository
         let client;
         try {
             client = await ConnectionManager.getConnection();
-            client.query(INSERT_BOOK, [
+            await client.query(INSERT_BOOK, [
                 item.getId(),
                 item.getBookTitle(),
                 item.getAuthor(),

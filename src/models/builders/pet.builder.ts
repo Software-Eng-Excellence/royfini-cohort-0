@@ -99,12 +99,12 @@ export class IdentifiablePetBuilder {
     }
     return new IdentifiablePet(
       this.id,
-      this.pet.getPetType(),
-      this.pet.getSize(),
-      this.pet.getEcoFriendly(),
-      this.pet.getFlavor(),
-      this.pet.getBrand(),
       this.pet.getProductType(),
+      this.pet.getPetType(),
+      this.pet.getBrand(),
+      this.pet.getSize(),
+      this.pet.getFlavor(),
+      this.pet.getEcoFriendly()
     );
   }
 }
