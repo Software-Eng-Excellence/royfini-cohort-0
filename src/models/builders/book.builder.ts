@@ -1,4 +1,4 @@
-import { Book } from "../Book.model";
+import { Book, IdentifiableBook } from "../Book.model";
 
 export class BookBuilder {
   private bookTitle!: string;
@@ -84,6 +84,47 @@ export class BookBuilder {
       this.publisher,
       this.specialEdition,
       this.packaging
+    );
+  }
+}
+export class IdentifiableBookBuilder {
+  private id!: string;
+  private book!: Book;
+
+  static newBuilder(): IdentifiableBookBuilder {
+    return new IdentifiableBookBuilder();
+  }
+
+  setId(id: string): IdentifiableBookBuilder {
+    this.id = id;
+    return this;
+  }
+  setBook(book: Book): IdentifiableBookBuilder {
+    this.book = book;
+    this.book.getBookTitle();
+    this.book.getAuthor();
+    this.book.getGenre();
+    this.book.getFormat();
+    this.book.getLanguage();
+    this.book.getPublisher();
+    this.book.getSpecialEdition();
+    this.book.getPackaging();
+    return this;
+  }
+  build(): IdentifiableBook {
+    if (!this.id || !this.book) {
+      throw new Error("Missing required properties");
+    }
+    return new IdentifiableBook(
+      this.id,
+      this.book.getBookTitle(),
+      this.book.getAuthor(),
+      this.book.getGenre(),
+      this.book.getFormat(),
+      this.book.getLanguage(),
+      this.book.getPublisher(),
+      this.book.getSpecialEdition(),
+      this.book.getPackaging(),
     );
   }
 }

@@ -23,11 +23,11 @@ async function main() {
     console.log(cake)
 }
 async function DBSandBox() {
-    const dbOrder = await RepositoryFactory.create(DBMode.SQLITE, ItemCategory.CAKE);
+    const dbOrder = await RepositoryFactory.create(DBMode.POSTGRESQL, ItemCategory.CAKE);
 
     const cake = CakeBuilder.newBuilder()
         .setType("Sponge")
-        .setFlavor("Vanilla")
+        .setFlavor("Chocolate")
         .setFilling("Cream")
         .setSize(20)
         .setLayers(2)
@@ -56,13 +56,13 @@ async function DBSandBox() {
         .setOrder(order)
         .build();
 
-    await dbOrder.create(idOrder);
+    //await dbOrder.create(idOrder);
 
     //await dbOrder.delete(idOrder.getId());
 
     //await dbOrder.update(idOrder);
     //console.log(await dbOrder.get(idOrder.getId()));
-    console.log((await dbOrder.getAll()));
+    //console.log((((await dbOrder.getAll()).length)));
 }
 
 // main();

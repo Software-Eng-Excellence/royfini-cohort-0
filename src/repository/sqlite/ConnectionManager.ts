@@ -5,7 +5,7 @@ import { DatabaseConnectionException } from "../../util/exceptions/DatabaseConne
 export class ConnectionManger {
   private static db: SqliteDatabase<Database, Statement> | null = null;
 
-  private constructor() {}
+  private constructor() { }
 
   public static async getConnection(): Promise<
     SqliteDatabase<Database, Statement>
